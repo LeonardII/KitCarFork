@@ -65,6 +65,7 @@ add_message_files(
   CarState.msg
   SetModelTwist.msg
   SetModelPose.msg
+  SteeringAngle.msg
 )
 
 ## Generate services in the 'srv' folder

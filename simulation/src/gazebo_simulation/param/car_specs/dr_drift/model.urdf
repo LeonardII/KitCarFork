@@ -7,7 +7,7 @@
         <box size="0.24 0.2207 0.0794"/>
       </geometry>
     </collision>
-    <visual>
+    <!--<visual>
       <origin xyz="0.095 0 0.0497" rpy="0 0 0"/>
       <geometry>
         <mesh filename="file://meshes/mr_fast.stl"/>
@@ -15,7 +15,7 @@
       <material name="mat">
         <color>1.0 1.0 1.0</color>
       </material>
-    </visual>
+    </visual>-->
     <inertial>
       <inertia ixx="0.02200514" ixy="0" ixz="0" iyx="0" iyy="0.025561743999999994" iyz="0" izx="0" izy="0" izz="0.042523396"/>
       <origin xyz="0.12 0 0.0397" rpy="0 0 0"/>
@@ -28,14 +28,14 @@
         <box size="0.05 0.04 0.04"/>
       </geometry>
     </collision>
-    <visual>
+    <!--<visual>
       <geometry>
         <box size="0.05 0.04 0.04"/>
       </geometry>
       <material name="mat">
         <color>1.0 1.0 1.0</color>
       </material>
-    </visual>
+    </visual>-->
     <inertial>
       <inertia ixx="2.6666666666666667e-07" ixy="0" ixz="0" iyx="0" iyy="3.416666666666667e-07" iyz="0" izx="0" izy="0" izz="3.416666666666667e-07"/>
       <mass value="0.001"/>
@@ -44,7 +44,7 @@
   <joint name="front_camera_joint" type="fixed">
     <parent link="chassis"/>
     <child link="front_camera_link"/>
-    <origin xyz="-0.006256036655947976 0.0017242800000000001 0.2645206675581313" rpy="0.0 0.15771603452297908 0.0"/>
+    <origin xyz="0.206256036655947976 0.0017242800000000001 0.3045206675581313" rpy="0.0 0.75771603452297908 0.0"/>
   </joint>
   <gazebo reference="front_camera_link">
     <sensor name="front_camera" type="camera">
@@ -56,7 +56,7 @@
         <imageTopicName>/simulation/sensors/raw/camera</imageTopicName>
         <cameraInfoTopicName>/simulation/sensors/camera/info</cameraInfoTopicName>
       </plugin>
-      <update_rate>60</update_rate>
+      <update_rate>15</update_rate>
       <camera>
         <horizontal_fov>2.064911321881509</horizontal_fov>
         <image>
@@ -77,14 +77,14 @@
         <box size="0.02 0.02 0.02"/>
       </geometry>
     </collision>
-    <visual>
+    <!--<visual>
       <geometry>
         <box size="0.02 0.02 0.02"/>
       </geometry>
       <material name="mat">
         <color>1.0 1.0 1.0</color>
       </material>
-    </visual>
+    </visual>-->
     <inertial>
       <inertia ixx="6.666666666666667e-10" ixy="0" ixz="0" iyx="0" iyy="6.666666666666667e-10" iyz="0" izx="0" izy="0" izz="6.666666666666667e-10"/>
       <mass value="1e-05"/>
@@ -128,14 +128,14 @@
         <box size="0.02 0.02 0.02"/>
       </geometry>
     </collision>
-    <visual>
+    <!--<visual>
       <geometry>
         <box size="0.02 0.02 0.02"/>
       </geometry>
       <material name="mat">
         <color>1.0 1.0 1.0</color>
       </material>
-    </visual>
+    </visual>-->
     <inertial>
       <inertia ixx="6.666666666666667e-10" ixy="0" ixz="0" iyx="0" iyy="6.666666666666667e-10" iyz="0" izx="0" izy="0" izz="6.666666666666667e-10"/>
       <mass value="1e-05"/>
