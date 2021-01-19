@@ -7,6 +7,7 @@ from typing import Dict, List, Tuple
 import geometry_msgs.msg
 import rospy
 import std_msgs
+from gazebo_simulation.msg import SteeringAngle
 from simulation_brain_link.msg import State as StateEstimationMsg
 from simulation_groundtruth.srv import LaneSrv, SectionSrv
 from tf2_msgs.msg import TFMessage
@@ -60,6 +61,9 @@ class AutomaticDriveNode(NodeBase):
             StateEstimationMsg,
             queue_size=1,
         )
+        self.steering_angle_pub = rospy.Publisher(
+            "/steering_angle", SteeringAngle, queue_size=100
+        )
 
         groundtruth_topics = self.param.topics.groundtruth
 
@@ -91,6 +95,7 @@ class AutomaticDriveNode(NodeBase):
 
     def stop(self):
         self.state_estimation_publisher.unregister()
+        self.steering_angle_pub.unregister()
         self.pub_tf.unregister()
         super().stop()
 
@@ -209,6 +214,10 @@ class AutomaticDriveNode(NodeBase):
 
         # Calculate position, speed, and yaw
         position = self.driving_line[0].interpolate(self._driving_state.distance_driven)
+        backDistance = self._driving_state.distance_driven - 0.3
+        if backDistance < 0:
+            backDistance = backDistance + self.driving_line[0].length
+        backPosition = self.driving_line[0].interpolate(backDistance, 0)
 
         # Depending on the align_with_middle_line parameter, the car is always parallel
         # to the middle line or to the driving line.
@@ -217,10 +226,24 @@ class AutomaticDriveNode(NodeBase):
         )
 
         # Always let the car face into the direction of the middle line.
+        steeringDirection = alignment_line.interpolate_direction(
+            alignment_line.project(position)
+        )
         pose = Pose(
             position,
-            alignment_line.interpolate_direction(alignment_line.project(position)),
+            steeringDirection,
         )
+
+        # steering angle
+        carDirection = Vector(position) - Vector(backPosition)
+        moinmeister = (carDirection * steeringDirection) / (
+            abs(carDirection) * abs(steeringDirection)
+        )
+        if moinmeister < 0:
+            moinmeister = 0
+        if moinmeister > 1:
+            moinmeister = 1
+        steeringAngle = math.acos(moinmeister)
 
         speed = Vector(current_speed, 0)  # Ignore y component of speed
         # Yaw rate = curvature * speed
@@ -230,14 +253,13 @@ class AutomaticDriveNode(NodeBase):
             )
             * current_speed
         )
-
         # Publish up to date messages!
         self.update_world_vehicle_tf(
             self.initial_tf.inverse * Transform(pose, pose.get_angle())
         )
-        self.update_state_estimation(speed, yaw_rate)
+        self.update_state_estimation(speed, yaw_rate, steeringAngle)
 
-    def update_state_estimation(self, speed: Vector, yaw_rate: float):
+    def update_state_estimation(self, speed: Vector, yaw_rate: float, steeringAngle: float):
         """Publish new state estimation message.
 
         Args:
@@ -248,6 +270,11 @@ class AutomaticDriveNode(NodeBase):
         msg.speed_x = speed.x
         msg.speed_y = speed.y
         msg.yaw_rate = yaw_rate
+        # msg.steering_angle_front = steeringAngle
+
+        angle = SteeringAngle()
+        angle.ANGLE = steeringAngle
+        self.steering_angle_pub.publish(angle)
 
         self.state_estimation_publisher.publish(msg)
 
