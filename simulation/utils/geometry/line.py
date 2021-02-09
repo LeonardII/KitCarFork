@@ -186,6 +186,9 @@ class Line(shapely.geometry.linestring.LineString):
         Returns:
             Corresponding direction as a normalised vector.
         """
+
+        """ Das interpolate geht auf eine Linie welche Punkte gerade mit einander verbindet.
+            Um das smooth zu machen sollte jedes interpolate auf eine gesmoothte curve gehen"""
         n = Vector(self.interpolate(arc_length + APPROXIMATION_DISTANCE))
         p = Vector(self.interpolate(arc_length - APPROXIMATION_DISTANCE))
 

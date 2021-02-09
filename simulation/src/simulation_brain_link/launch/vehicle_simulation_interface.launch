@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+  <node pkg="simulation_brain_link" type="vehicle_simulation_interface_node" output="screen" ns="simulation_brain_link" name="vehicle_simulation_interface_node">
+    <rosparam file="$(find simulation_brain_link)/param/vehicle_simulation_link/default.yaml" command="load" />
+    <rosparam file="$(find simulation_brain_link)/param/vehicle_simulation_link/topics.yaml" command="load" ns="topics" />
+  </node>
+</launch>

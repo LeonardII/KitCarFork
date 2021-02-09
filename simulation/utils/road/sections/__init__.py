@@ -36,6 +36,7 @@ from simulation.utils.road.sections.surface_marking import SurfaceMarkingPoly  #
 from simulation.utils.road.sections.surface_marking import SurfaceMarkingRect  # noqa: 402
 from simulation.utils.road.sections.road_section import RoadSection  # noqa: 402
 from simulation.utils.road.sections.straight_road import StraightRoad  # noqa: 402
+from simulation.utils.road.sections.straight_road import InvisibleRoad  # noqa: 402
 from simulation.utils.road.sections.bezier_curve import QuadBezier, CubicBezier  # noqa: 402
 from simulation.utils.road.sections.circular_arc import (  # noqa: 402
     LeftCircularArc,
@@ -66,6 +67,7 @@ __all__ = [
     "ParkingLot",
     "ParkingSpot",
     "StraightRoad",
+    "InvisibleRoad",
     "ZebraCrossing",
     "RoadSection",
     "BlockedArea",

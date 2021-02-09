@@ -39,6 +39,9 @@
     <arg name="set_pose" value="$(arg set_pose)"/>
   </include>
 
+  <include file="$(find simulation_brain_link)/launch/vehicle_simulation_interface.launch">
+  </include>
+
   <include if="$(arg use_deprecated_camera)" file="$(find simulation_brain_link)/launch/sensor_camera_node_deprecated.launch"/>
 
   <include if="$(eval arg('use_deprecated_camera') == 0)" file="$(find simulation_brain_link)/launch/sensor_camera_node.launch">

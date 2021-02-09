@@ -26,7 +26,7 @@ class _CircularArc(RoadSection):
 
     @property
     def middle_line(self) -> Line:
-        RADIAN_STEP = math.pi / 360
+        RADIAN_STEP = math.pi / (360 * 4)
         points = []
         current_angle = 0
         radius = (

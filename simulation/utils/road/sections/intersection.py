@@ -102,7 +102,7 @@ class Intersection(RoadSection):
 
         self._size = self.size / 2
 
-        self.traffic_signs.extend(self._get_intersection_traffic_signs())
+        # self.traffic_signs.extend(self._get_intersection_traffic_signs())
         self.surface_markings.extend(self._get_intersection_surface_markings())
 
         # Check if size is large enough

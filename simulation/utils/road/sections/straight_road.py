@@ -46,3 +46,27 @@ surface_markings=[], length=2)], length=2.0)
     @property
     def middle_line(self) -> Line:
         return self.transform * Line([Point(0, 0), Point(self.length, 0)])
+
+
+@dataclass
+class _InvisibleRoad(RoadSection):
+
+    TYPE = road_section_type.INVISIBLE
+
+    length: float = 1
+    """Length of the section."""
+
+    def __post_init__(self):
+        assert self.length > 0, "Invalid: length for StraightRoad is smaller than 0."
+        super().__post_init__()
+
+
+class InvisibleRoad(_InvisibleRoad):
+
+    left_line_marking: str = RoadSection.MISSING_LINE_MARKING
+    middle_line_marking: str = RoadSection.MISSING_LINE_MARKING
+    right_line_marking: str = RoadSection.MISSING_LINE_MARKING
+
+    @property
+    def middle_line(self) -> Line:
+        return self.transform * Line([Point(0, 0), Point(self.length, 0)])

@@ -239,11 +239,16 @@ class AutomaticDriveNode(NodeBase):
         moinmeister = (carDirection * steeringDirection) / (
             abs(carDirection) * abs(steeringDirection)
         )
-        if moinmeister < 0:
-            moinmeister = 0
+        sign = carDirection.x * steeringDirection.y - carDirection.y * steeringDirection.x
+        if sign < 0:
+            sign = 1
+        else:
+            sign = -1
+        if moinmeister < -1:
+            moinmeister = -1
         if moinmeister > 1:
             moinmeister = 1
-        steeringAngle = math.acos(moinmeister)
+        steeringAngle = sign * math.acos(moinmeister)
 
         speed = Vector(current_speed, 0)  # Ignore y component of speed
         # Yaw rate = curvature * speed

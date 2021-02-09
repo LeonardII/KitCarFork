@@ -10,6 +10,7 @@ import random
 from dataclasses import dataclass, field
 from typing import List, Tuple
 
+import simulation.utils.road.sections.type as road_section_type
 from simulation.utils.geometry import Point, Pose, Transform, Vector
 from simulation.utils.road.sections.bezier_curve import CubicBezier
 from simulation.utils.road.sections.road_section import RoadSection
